@@ -12,7 +12,6 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
 
 return [
-    // Configurações da aplicação
     'settings' => [
         'displayErrorDetails' => $_ENV['APP_ENV'] === 'development',
         'logErrors' => true,
