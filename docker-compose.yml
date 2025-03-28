@@ -1,5 +1,6 @@
 services:
     mvc-base:
+        container_name: mvc-base
         build:
             context: .
             target: php
