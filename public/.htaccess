@@ -1,0 +1,38 @@
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [QSA,L]
+</IfModule>
+
+<FilesMatch "^\.(htaccess|htpasswd)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+<LimitExcept GET POST PUT DELETE PATCH OPTIONS>
+    Order Allow,Deny
+    Deny from all
+</LimitExcept>
+
+<IfModule mod_headers.c>
+
+    Header set X-XSS-Protection "1; mode=block"
+    
+    Header set X-Content-Type-Options "nosniff"
+    
+    Header set X-Frame-Options "SAMEORIGIN"
+    
+    Header unset X-Powered-By
+    Header unset Server
+</IfModule>
+
+<IfModule mod_php7.c>
+    php_value session.cookie_httponly 1
+    php_value session.cookie_secure 1
+    php_value session.use_only_cookies 1
+</IfModule>
+
+ServerSignature Off

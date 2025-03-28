@@ -1,11 +1,26 @@
-RewriteEngine On
-
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ public/index.php [L]
-
-RewriteRule ^(.*\.(env|htaccess|config\.php))$ - [F,L]
-
-RewriteRule ^public/(.*\.(?!php$)[^.]*)$ - [F,L]
-
 Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    RewriteRule ^$ public/ [L]
+    RewriteRule (.*) public/$1 [L]
+</IfModule>
+
+<FilesMatch "(\.env|composer\.json|composer\.lock)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteRule ^(app|bootstrap|config|database|routes|storage|tests|vendor)/(.*)?$ - [F,L]
+</IfModule>
+
+<FilesMatch "^\.">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+AddDefaultCharset UTF-8
+
+ServerSignature Off
